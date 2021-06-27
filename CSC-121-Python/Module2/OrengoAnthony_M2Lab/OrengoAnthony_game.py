@@ -1,7 +1,8 @@
 #Import python support file
+
+
+import random
 import OrengoAnthony_game_functions as gameFunctions
-import os
- 
 
 # This program is a version of the "Rock", "Paper", "Scissors" game, using the python
 #console. The user will have the option to play a 1, 2, or 3 round game. The winner will
@@ -21,29 +22,80 @@ import os
 #8: End the program/loop by changing loop variable to true.  
 
 # main function
+
 def main():
     choice = ""
-    menuLoop = False
-    while menuLoop == False:
-        gameFunctions.mainMenu()
-        # Get input from user
-        choice = input("\nChoose from the Menu --> ")
-        if choice == "1":
-            #Start Highest Number game 
-            gameFunctions.gameOne()
-        elif choice == "2":
-            #Start Highest Number game 
-             gameFunctions.gameTwo()
-        elif choice == "3":
-            #Start Highest Number game 
-            gameFunctions.gameThree()  
-        elif choice == "4":
-            #Exits program
-            print("Goodbye")
-            menuLoop = True
-            exit()
-        else:
-           print(gameFunctions.displayMessageInvalid())
+    menu_Loop = False
+    game_loop = False
+    result = gameFunctions.TIE
+    while menu_Loop == False:
+         game_loop = False
+    #Display Menu Options---------------------------------------------------- 
+         print(
+        "Rock, Paper, Scissors  \n"+
+        "--------------------------------\n"+
+        "1. Game\n" +
+        "2. Exit\n"+ 
+        "***********************")
+         # Get input from user
+         choice = input("\nChoose from the Menu --> ")
+         if choice == "1":
+            while game_loop == False:
+            # Get computer number
+                computer = random.randint(1, 3)
+
+            # Get player number
+                player = input('Enter:\n'
+                           '1 for rock\n' \
+                           '2 for paper\n'
+                           '3 for scissors -->  ')
+                #Determine if input is a digit
+                if player.isdigit():              
+                    player = int(player)
+                    #Diplay choices to user
+                    print ('Computer chose:', gameFunctions.choiceString(computer))
+                    print ('You chose:', gameFunctions.choiceString(player))
+                    #Determine the winner of the round
+                    result = gameFunctions.rockPaperScissors(computer, player)
+        
+                    if result == gameFunctions.TIE:
+                        print('\nYou made the same choice as ' \
+                      'the computer. Starting over')
+
+                    elif (result == gameFunctions.COMPUTER_WINS):
+                        print ('\nThe computer wins the game')
+                        print("Do you wish to play again? ")
+                        choice = input("1. Yes\n"+
+                                       "2. No\n"+
+                                       "--> ")
+                        if choice == '1':
+                             game_loop = False
+                        elif choice == '2':
+                             game_loop = True
+                        else:
+                            print("Invalid Option!")
+                            game_loop = True
+                    elif result == gameFunctions.PLAYER_WINS:
+                        print ('\nYou win the game')
+                        print("Do you wish to play again? ")
+                        choice = input("1. Yes\n" +
+                                       "2. No\n"+
+                                       "--> ")
+                        if choice == '1':
+                            game_loop = False
+                        elif choice == '2':
+                            game_loop = True
+                        else:
+                            print("Invalid Option!")
+                            game_loop = True
+                else:
+                     print ('\nYou made an invalid choice. No winner')
+         
+         elif choice == "2":
+         #Exits program
+             menu_Loop = True
+         else:
+             print("Invalid option! Try Again!")
  
 # Call the main function.
 
